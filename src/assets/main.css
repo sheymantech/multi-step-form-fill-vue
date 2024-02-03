@@ -353,3 +353,10 @@ img {
     position: none;
   }
 }
+
+.msAuto {
+  margin-left: auto;
+}
+.show{
+  display: block !important;
+}

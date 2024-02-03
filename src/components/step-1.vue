@@ -22,7 +22,20 @@
         <label class="danger hidden"> This field is required </label>
       </div>
       <input type="text" placeholder="e.g.+1 234 567 890" id="input-num" />
-      <button class="next-step-1 btn-step-1" type="submit">Next step</button>
+      <button class="next-step-1 btn-step-1" type="submit" @click="nextStep">
+        Next step
+      </button>
     </form>
   </div>
 </template>
+
+<script setup>
+import { defineProps } from "vue";
+
+const props = defineProps({
+  nextStep: {
+    type: Number,
+    required: true,
+  },
+});
+</script>

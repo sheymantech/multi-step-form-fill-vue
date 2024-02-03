@@ -30,7 +30,25 @@
       </div>
       <div class="price-total">$12/mo</div>
     </div>
-    <button class="next-step-4 btn-step-4 mt-5">Confirm</button>
-    <button class="go-back-step-4 btn-back-4 mt-5">Go Back</button>
+    <button class="next-step-4 btn-step-4 mt-5" @click="nextStep">
+      Confirm
+    </button>
+    <button class="go-back-step-4 btn-back-4 mt-5" @click="prevStep">
+      Go Back
+    </button>
   </div>
 </template>
+<script setup>
+import { defineProps } from "vue";
+
+const props = defineProps({
+  nextStep: {
+    type: Number,
+    required: true,
+  },
+  prevStep: {
+    type: Number,
+    required: true,
+  },
+});
+</script>
