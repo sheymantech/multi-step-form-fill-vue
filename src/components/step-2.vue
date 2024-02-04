@@ -10,6 +10,7 @@
         v-for="plan in plans"
         :key="plan.id"
         @click="handleSelectedPlan(plan)"
+        :class="{ activePlan: plan.active }"
       >
         <img :src="plan.img" alt="" />
         <div class="plan-cont-wrapper">
@@ -58,46 +59,18 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+  plans: {
+    type: Array,
+    required: true,
+  },
+  switchToggle: {
+    type: Number,
+    required: true,
+  },
+  handleSelectedPlan: {
+    type: Number,
+    required: true,
+  },
+  switchBtn: Boolean,
 });
-
-let switchBtn = ref(false);
-
-let selectedPlan = ref();
-const plans = ref([
-  {
-    name: "Arcades",
-    priceMonthly: 9,
-    priceYearly: 90,
-    img: "../assets/img/icon-arcade.svg",
-    id: 1,
-  },
-  {
-    name: "Advance",
-    priceMonthly: 12,
-    priceYearly: 120,
-    img: "../assets/img/icon-advanced.svg",
-    id: 2,
-  },
-  {
-    name: "Pro",
-    priceMonthly: 15,
-    priceYearly: 150,
-    img: "../assets/img/icon-pro.svg",
-    id: 3,
-  },
-]);
-
-const switchToggle = () => {
-  switchBtn.value = !switchBtn.value;
-};
-const handleSelectedPlan = function (plan) {
-  switchBtn.value
-    ? (selectedPlan.value = plan.priceYearly)
-    : (selectedPlan.value = plan.priceMonthly);
-  console.log(selectedPlan);
-};
-
-const emit = defineEmits(["SwitchToggleCheck", "selectedPlan"]);
-emit("SwitchToggleCheck", switchBtn);
-emit("selectedPlan", selectedPlan);
 </script>

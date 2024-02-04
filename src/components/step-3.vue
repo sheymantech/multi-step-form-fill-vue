@@ -10,7 +10,11 @@
       >
         <div class="row cont-fill">
           <div class="add-ons-content-main col-10">
-            <input type="checkbox" class="service" />
+            <input
+              type="checkbox"
+              class="service"
+              @change="handleSelectedAddons"
+            />
             <div class="add-ons-content-child mt-3">
               <h6>{{ addon.name }}</h6>
               <p>{{ addon.desc }}</p>
@@ -48,33 +52,14 @@ const props = defineProps({
     type: Number,
     required: true,
   },
-  switchChecker: {
-    type: Boolean,
+  switchChecker: Boolean,
+  addons: {
+    type: Array,
+    required: true,
+  },
+  handleSelectedAddons: {
+    type: Number,
     required: true,
   },
 });
-
-const addons = ref([
-  {
-    id: 1,
-    name: "Pick Add-ons",
-    desc: "Add-ons help enhance your gaming experience.",
-    priceMonthly: 1,
-    priceYearly: 10,
-  },
-  {
-    id: 2,
-    name: "online services",
-    desc: "Access to multiplayer games",
-    priceMonthly: 2,
-    priceYearly: 12,
-  },
-  {
-    id: 3,
-    name: "larger storage",
-    desc: "Extra 1TB of cloud save",
-    priceMonthly: 2,
-    priceYearly: 12,
-  },
-]);
 </script>

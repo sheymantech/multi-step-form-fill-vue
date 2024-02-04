@@ -21,14 +21,18 @@
               v-if="currentStep === 2"
               :nextStep="nextStep"
               :prevStep="prevStep"
-              @switchToggleCheck="handleSwitch"
-              @selectedPlan="handleSelectedPlan"
+              :plans="plans"
+              :switchToggle="switchToggle"
+              :handleSelectedPlan="handleSelectedPlan"
+              :switchBtn="switchBtn"
             />
             <step3
               v-if="currentStep === 3"
               :nextStep="nextStep"
               :prevStep="prevStep"
-              :switchChecker="switchChecker"
+              :addons="addons"
+              :switchChecker="switchBtn"
+              :handleSelectedAddons="handleSelectedAddons"
             />
             <step4
               v-if="currentStep === 4"
@@ -108,8 +112,6 @@ import step4 from "./components/step-4.vue";
 import step5 from "./components/step-5.vue";
 import { ref } from "vue";
 
-let switchChecker = ref();
-
 const currentStep = ref(1);
 
 const nextStep = () => {
@@ -119,9 +121,75 @@ const nextStep = () => {
 const prevStep = () => {
   currentStep.value--;
 };
-const handleSwitch = function (switchCheck) {
-  switchChecker.value = switchCheck.value;
-  // console.log(switchCheck.value);
+
+let switchBtn = ref(false);
+
+let selectedPlan = ref();
+let selectedAddons = ref([]);
+const plans = ref([
+  {
+    name: "Arcades",
+    priceMonthly: 9,
+    priceYearly: 90,
+    img: "../assets/img/icon-arcade.svg",
+    id: 1,
+    active: false,
+  },
+  {
+    name: "Advance",
+    priceMonthly: 12,
+    priceYearly: 120,
+    img: "../assets/img/icon-advanced.svg",
+    id: 2,
+    active: false,
+  },
+  {
+    name: "Pro",
+    priceMonthly: 15,
+    priceYearly: 150,
+    img: "../assets/img/icon-pro.svg",
+    id: 3,
+    active: false,
+  },
+]);
+
+const switchToggle = () => {
+  switchBtn.value = !switchBtn.value;
+  return switchBtn.value;
 };
-const handleSelectedPlan = function (selectedPlan) {};
+const handleSelectedPlan = function (plan) {
+  plans.value.forEach((plan) => {
+    plan.active = false;
+  });
+  switchBtn.value
+    ? (selectedPlan.value = plan.priceYearly)
+    : (selectedPlan.value = plan.priceMonthly);
+  plan.active = !plan.active;
+};
+const addons = ref([
+  {
+    id: 1,
+    name: "Pick Add-ons",
+    desc: "Add-ons help enhance your gaming experience.",
+    priceMonthly: 1,
+    priceYearly: 10,
+  },
+  {
+    id: 2,
+    name: "online services",
+    desc: "Access to multiplayer games",
+    priceMonthly: 2,
+    priceYearly: 12,
+  },
+  {
+    id: 3,
+    name: "larger storage",
+    desc: "Extra 1TB of cloud save",
+    priceMonthly: 2,
+    priceYearly: 12,
+  },
+]);
+const handleSelectedAddons = function (event, plan) {
+  console.log(event.target.checked);
+};
 </script>
