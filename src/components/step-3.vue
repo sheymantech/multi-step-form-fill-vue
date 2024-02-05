@@ -7,13 +7,14 @@
         class="col-lg-8 add-ons-wrapper mt-3"
         v-for="addon in addons"
         :key="addon.id"
+        :class="{ activeAddOn: addon.active }"
       >
         <div class="row cont-fill">
           <div class="add-ons-content-main col-10">
             <input
               type="checkbox"
               class="service"
-              @change="handleSelectedAddons"
+              @change="(event) => handleSelectedAddons(event, addon)"
             />
             <div class="add-ons-content-child mt-3">
               <h6>{{ addon.name }}</h6>

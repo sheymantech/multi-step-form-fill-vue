@@ -12,23 +12,20 @@
       </div>
       <hr />
 
-      <p class="change">change</p>
+      <p class="change" @click="change">change</p>
       <div class="addons-list-total"></div>
-      <!-- <div class="add-ons-choose">
-                      <p>online service</p>
-                      <p>$1/mo</p>
-                    </div>
-                    <div class="add-ons-choose">
-                      <p>Larger Storage</p>
-                      <p>$2/mo</p>
-                    </div>
-                  </div> -->
+      <div class="add-ons-choose" v-for="selectedAddon in selectedAddons">
+        <p>{{ selectedAddon.name }}</p>
+        <p>{{ `$${selectedAddon.price}/${switchBtn ? "Yr" : "Mo"}` }}</p>
+      </div>
     </div>
     <div class="total">
       <div class="total-text">
-        <p>Total(monthly)</p>
+        <p>Total {{ `(${switchBtn ? "Yearly" : "Monthly"})` }}</p>
       </div>
-      <div class="price-total">$12/mo</div>
+      <div class="price-total">
+        {{ `${allTotal}/${switchBtn ? "Yr" : "Mo"}` }}
+      </div>
     </div>
     <button class="next-step-4 btn-step-4 mt-5" @click="nextStep">
       Confirm
@@ -47,6 +44,22 @@ const props = defineProps({
     required: true,
   },
   prevStep: {
+    type: Number,
+    required: true,
+  },
+  change: {
+    type: Number,
+    required: true,
+  },
+  selectedAddons: {
+    type: Array,
+    required: true,
+  },
+  switchBtn: {
+    type: Boolean,
+    required: true,
+  },
+  allTotal: {
     type: Number,
     required: true,
   },

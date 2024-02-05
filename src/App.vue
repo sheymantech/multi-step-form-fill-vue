@@ -38,6 +38,10 @@
               v-if="currentStep === 4"
               :nextStep="nextStep"
               :prevStep="prevStep"
+              :change="change"
+              :selectedAddons="selectedAddons"
+              :switchBtn="switchBtn"
+              :allTotal="allTotal"
             />
             <step5 v-if="currentStep === 5" />
           </div>
@@ -113,6 +117,7 @@ import step5 from "./components/step-5.vue";
 import { ref } from "vue";
 
 const currentStep = ref(1);
+const addonsRendering = ref([]);
 
 const nextStep = () => {
   currentStep.value++;
@@ -120,12 +125,19 @@ const nextStep = () => {
 };
 const prevStep = () => {
   currentStep.value--;
+  selectedAddons.value.splice(0, selectedAddons.value.length);
+};
+const change = () => {
+  currentStep.value = 2;
+  selectedAddons.value.splice(0, selectedAddons.value.length);
 };
 
 let switchBtn = ref(false);
 
 let selectedPlan = ref();
+let addonsTotal = ref();
 let selectedAddons = ref([]);
+let allTotal = ref();
 const plans = ref([
   {
     name: "Arcades",
@@ -173,6 +185,7 @@ const addons = ref([
     desc: "Add-ons help enhance your gaming experience.",
     priceMonthly: 1,
     priceYearly: 10,
+    active: false,
   },
   {
     id: 2,
@@ -180,6 +193,7 @@ const addons = ref([
     desc: "Access to multiplayer games",
     priceMonthly: 2,
     priceYearly: 12,
+    active: false,
   },
   {
     id: 3,
@@ -187,9 +201,37 @@ const addons = ref([
     desc: "Extra 1TB of cloud save",
     priceMonthly: 2,
     priceYearly: 12,
+    active: false,
   },
 ]);
-const handleSelectedAddons = function (event, plan) {
-  console.log(event.target.checked);
+let addonPrice = ref();
+const handleSelectedAddons = function (event, addon) {
+  if (event.target.checked) {
+    addon.active = true;
+    if (switchBtn.value) {
+      addonPrice.value = {
+        name: addon.name,
+        price: addon.priceYearly,
+      };
+      selectedAddons.value.push(addonPrice.value);
+    } else {
+      addonPrice.value = {
+        name: addon.name,
+        price: addon.priceMonthly,
+      };
+      selectedAddons.value.push(addonPrice.value);
+    }
+  } else {
+    addon.active = false;
+    const index = selectedAddons.value.indexOf(addonPrice.value);
+    selectedAddons.value.splice(index, 1);
+  }
+  addonsTotal.value = selectedAddons.value.reduce((sum, addon) => {
+    return sum + addon.price;
+  }, 0);
+
+  allTotal.value = (selectedPlan.value || 0) + addonsTotal.value;
 };
+
+//total implementation
 </script>

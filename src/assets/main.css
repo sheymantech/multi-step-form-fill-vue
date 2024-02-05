@@ -223,7 +223,7 @@ img {
   width: 17px;
   margin-right: 2rem;
 }
-.active-add-on {
+.activeAddOn {
   background-color: hsl(244, 35%, 91%);
   border: 1px solid hsl(243, 100%, 62%) !important;
 }
