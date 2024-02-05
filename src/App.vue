@@ -42,6 +42,7 @@
               :selectedAddons="selectedAddons"
               :switchBtn="switchBtn"
               :allTotal="allTotal"
+              :selectedPlanName="selectedPlanName"
             />
             <step5 v-if="currentStep === 5" />
           </div>
@@ -138,6 +139,7 @@ let selectedPlan = ref();
 let addonsTotal = ref();
 let selectedAddons = ref([]);
 let allTotal = ref();
+let selectedPlanName = ref();
 const plans = ref([
   {
     name: "Arcades",
@@ -173,9 +175,20 @@ const handleSelectedPlan = function (plan) {
   plans.value.forEach((plan) => {
     plan.active = false;
   });
-  switchBtn.value
-    ? (selectedPlan.value = plan.priceYearly)
-    : (selectedPlan.value = plan.priceMonthly);
+
+  if (switchBtn.value) {
+    selectedPlan.value = plan.priceYearly;
+    selectedPlanName.value = {
+      name: plan.name,
+      price: plan.priceYearly,
+    };
+  } else {
+    selectedPlan.value = plan.priceMonthly;
+    selectedPlanName.value = {
+      name: plan.name,
+      price: plan.priceMonthly,
+    };
+  }
   plan.active = !plan.active;
 };
 const addons = ref([
@@ -230,7 +243,7 @@ const handleSelectedAddons = function (event, addon) {
     return sum + addon.price;
   }, 0);
 
-  allTotal.value = (selectedPlan.value || 0) + addonsTotal.value;
+  allTotal.value = (selectedPlan.value || 12) + addonsTotal.value;
 };
 
 //total implementation

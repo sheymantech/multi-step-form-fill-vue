@@ -5,10 +5,14 @@
     <div class="step-4-cont">
       <div class="plan-choose">
         <h5>
-          <span class="total-text-span-2">arcades</span>
-          <span class="total-text-span">(monthly)</span>
+          <span class="total-text-span-2">{{ selectedPlanName.name }}</span>
+          <span class="total-text-span">{{
+            `${switchBtn ? "(Yearly)" : "(Monthly)"}`
+          }}</span>
         </h5>
-        <h5 class="price-plan-total">$9/mo</h5>
+        <h5 class="price-plan-total">
+          {{ `$${selectedPlanName.price}/${switchBtn ? "Yr" : "Mo"}` }}
+        </h5>
       </div>
       <hr />
 
@@ -24,7 +28,7 @@
         <p>Total {{ `(${switchBtn ? "Yearly" : "Monthly"})` }}</p>
       </div>
       <div class="price-total">
-        {{ `${allTotal}/${switchBtn ? "Yr" : "Mo"}` }}
+        {{ `$${allTotal}/${switchBtn ? "Yr" : "Mo"}` }}
       </div>
     </div>
     <button class="next-step-4 btn-step-4 mt-5" @click="nextStep">
@@ -61,6 +65,10 @@ const props = defineProps({
   },
   allTotal: {
     type: Number,
+    required: true,
+  },
+  selectedPlanName: {
+    type: Object,
     required: true,
   },
 });
