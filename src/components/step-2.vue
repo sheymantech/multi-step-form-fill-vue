@@ -17,7 +17,7 @@
           <h4>{{ plan.name }}</h4>
           <p class="price-year1">
             $
-            {{css: ['assets/normalize.css'],
+            {{
               switchBtn ? `${plan.priceYearly}/Yr` : `${plan.priceMonthly}/Mo`
             }}
           </p>
