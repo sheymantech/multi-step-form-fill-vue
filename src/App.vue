@@ -244,6 +244,7 @@ const handleSelectedAddons = function (event, addon) {
   }, 0);
 
   allTotal.value = (selectedPlan.value || 12) + addonsTotal.value;
+  console.log("olaniyan sheyi");
 };
 
 //total implementation
